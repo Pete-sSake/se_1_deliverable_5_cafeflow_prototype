@@ -1,0 +1,14 @@
+@if (auth.isLoggedIn) {
+  <mat-toolbar color="primary" class="app-toolbar">
+    <span class="app-title">CafeFlow</span>
+    <span class="spacer"></span>
+    <button mat-raised-button class="nav-button" (click)="navigateTo('/menu-management')">Menu Management</button>
+    <button mat-raised-button class="nav-button" (click)="navigateTo('/inventory-management')">Inventory Management</button>
+    <span class="spacer"></span>
+    <button mat-raised-button class="sign-off-button" (click)="signOff()">Sign Off</button>
+  </mat-toolbar>
+}
+
+<div class="app-content">
+  <router-outlet/>
+</div>

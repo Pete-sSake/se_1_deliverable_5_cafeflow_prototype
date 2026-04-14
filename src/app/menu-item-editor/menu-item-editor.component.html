@@ -1,0 +1,69 @@
+<div class="editor-container">
+  <div class="left-section">
+    <h3>Ingredients</h3>
+    <div class="ingredients-grid">
+      @for (ingredient of allIngredients; track ingredient.id) {
+        <button
+          mat-raised-button
+          [color]="isIngredientSelected(ingredient.id) ? 'primary' : ''"
+          [class.selected]="isIngredientSelected(ingredient.id)"
+          (click)="toggleIngredient(ingredient.id)">
+          {{ ingredient.name }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="right-section">
+    <h3>{{ isEditMode ? 'Edit Menu Item' : 'Add New Menu Item' }}</h3>
+
+    <mat-form-field appearance="fill" class="full-width compact">
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="name" placeholder="Enter item name">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width compact">
+      <mat-label>Price</mat-label>
+      <span matTextPrefix>$&nbsp;</span>
+      <input matInput type="number" [(ngModel)]="price" (ngModelChange)="onPriceChange()" placeholder="0.00">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width compact">
+      <mat-label>Promo Price</mat-label>
+      <span matTextPrefix>$&nbsp;</span>
+      <input matInput type="number" [(ngModel)]="promoPrice" (ngModelChange)="onPromoPriceChange()" placeholder="0.00">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width compact">
+      <mat-label>Discount ($)</mat-label>
+      <input matInput type="number" [(ngModel)]="discountDollars" (ngModelChange)="onDiscountDollarsChange()" placeholder="0.00">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width compact">
+      <mat-label>Discount (%)</mat-label>
+      <input matInput type="number" [(ngModel)]="discountPercentage" (ngModelChange)="onDiscountPercentageChange()" placeholder="0">
+    </mat-form-field>
+
+    <div class="recipe-section">
+      <h4>Recipe</h4>
+      <div class="recipe-list">
+        @if (getSelectedIngredients().length === 0) {
+          <p class="no-ingredients">No ingredients selected</p>
+        }
+        @for (ingredient of getSelectedIngredients(); track ingredient.id) {
+          <div class="recipe-item">
+            <span>{{ ingredient.name }}</span>
+            <button mat-icon-button color="warn" (click)="removeIngredient(ingredient.id)">
+              <mat-icon>remove_circle</mat-icon>
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="save()">Save</button>
+      <button mat-raised-button (click)="cancel()">Cancel</button>
+    </div>
+  </div>
+</div>
