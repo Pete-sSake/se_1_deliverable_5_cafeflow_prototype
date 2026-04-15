@@ -5,7 +5,7 @@
   height: calc(100vh - 64px);
 
   .left-section {
-    flex: 1;
+    flex: 1.2;
     overflow-y: auto;
 
     h3 {
@@ -14,11 +14,13 @@
 
     .ingredients-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      grid-template-columns: repeat(5, 1fr);
       gap: 12px;
+      justify-items: center;
 
       button {
-        height: 60px;
+        height: 54px;
+        width: 90%;
         transition: all 0.3s ease;
         border: 2px solid transparent;
         font-weight: 500;
@@ -45,7 +47,7 @@
   }
 
   .right-section {
-    flex: 1;
+    flex: 0.8;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -56,16 +58,34 @@
 
     .full-width {
       width: 100%;
-      margin-bottom: 16px;
+      margin-bottom: 8px;
 
       &.compact {
-        margin-bottom: 8px;
+        margin-bottom: 4px;
+      }
+    }
+
+    .form-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 8px;
+
+      &.compact {
+        margin-bottom: 4px;
+      }
+    }
+
+    .half-width {
+      flex: 1;
+
+      &.compact {
+        margin-bottom: 0;
       }
     }
 
     .recipe-section {
-      margin-top: 24px;
-      margin-bottom: 24px;
+      margin-top: 8px;
+      margin-bottom: 8px;
 
       h4 {
         margin-bottom: 12px;
@@ -90,7 +110,7 @@
           justify-content: space-between;
           align-items: center;
           padding: 8px;
-          margin-bottom: 8px;
+          margin-bottom: 4px;
           background-color: #f5f5f5;
           border-radius: 4px;
 
@@ -108,8 +128,7 @@
     .actions {
       display: flex;
       gap: 12px;
-      margin-top: auto;
-      padding-top: 24px;
+      padding-top: 8px;
 
       button {
         flex: 1;

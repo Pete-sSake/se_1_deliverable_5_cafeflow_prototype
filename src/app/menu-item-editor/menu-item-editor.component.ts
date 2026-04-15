@@ -156,4 +156,10 @@ export class MenuItemEditorComponent implements OnInit {
   cancel(): void {
     this.router.navigate(['/menu-management']);
   }
+
+  isFormValid(): boolean {
+    return this.name.trim() !== '' && 
+           this.price > 0 && 
+           this.selectedIngredientIds.size > 0;
+  }
 }

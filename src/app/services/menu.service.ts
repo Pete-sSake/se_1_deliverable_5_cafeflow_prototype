@@ -82,4 +82,11 @@ export class MenuService {
       item.promo = !item.promo;
     }
   }
+
+  deleteMenuItem(id: number): void {
+    const index = this.menuItems.findIndex(i => i.id === id);
+    if (index !== -1) {
+      this.menuItems.splice(index, 1);
+    }
+  }
 }
