@@ -30,16 +30,16 @@ export class MenuService {
   ];
 
   private ingredients: Ingredient[] = [
-    { id: 1, name: 'Espresso Shot' },
-    { id: 2, name: 'Water' },
-    { id: 3, name: 'Milk' },
-    { id: 4, name: 'Foam' },
-    { id: 5, name: 'Chocolate Syrup' },
-    { id: 6, name: 'Vanilla Syrup' },
-    { id: 7, name: 'Caramel Syrup' },
-    { id: 8, name: 'Whipped Cream' },
-    { id: 9, name: 'Ice' },
-    { id: 10, name: 'Sugar' }
+    { id: 1, name: 'Espresso Shot', cost: 0.50, unit: 'unit', stockAmount: 500, reorderThreshold: 100 },
+    { id: 2, name: 'Water', cost: 0.01, unit: 'ml', stockAmount: 10000, reorderThreshold: 2000 },
+    { id: 3, name: 'Milk', cost: 0.05, unit: 'ml', stockAmount: 5000, reorderThreshold: 1000 },
+    { id: 4, name: 'Foam', cost: 0.03, unit: 'ml', stockAmount: 3000, reorderThreshold: 500 },
+    { id: 5, name: 'Chocolate Syrup', cost: 0.15, unit: 'ml', stockAmount: 2000, reorderThreshold: 400 },
+    { id: 6, name: 'Vanilla Syrup', cost: 0.12, unit: 'ml', stockAmount: 2500, reorderThreshold: 500 },
+    { id: 7, name: 'Caramel Syrup', cost: 0.13, unit: 'ml', stockAmount: 2200, reorderThreshold: 450 },
+    { id: 8, name: 'Whipped Cream', cost: 0.20, unit: 'grams', stockAmount: 1500, reorderThreshold: 300 },
+    { id: 9, name: 'Ice', cost: 0.02, unit: 'grams', stockAmount: 8000, reorderThreshold: 1500 },
+    { id: 10, name: 'Sugar', cost: 0.03, unit: 'grams', stockAmount: 3000, reorderThreshold: 600 }
   ];
 
   private nextId = 3;

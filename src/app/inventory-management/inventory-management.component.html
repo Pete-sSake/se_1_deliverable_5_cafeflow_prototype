@@ -1,0 +1,145 @@
+<div class="inventory-management-container">
+  <div class="header">
+    <h2>Inventory Management</h2>
+    <button mat-raised-button color="primary" (click)="addNewItem()" [disabled]="isAddingNew || editingItemId !== null">
+      <mat-icon>add</mat-icon>
+      Add New Inventory Item
+    </button>
+  </div>
+
+  @if (isAddingNew) {
+    <div class="edit-form-container">
+      <h3>Add New Inventory Item</h3>
+      <div class="edit-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput [(ngModel)]="editForm.name" placeholder="Enter ingredient name">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Cost ($)</mat-label>
+          <input matInput type="number" [(ngModel)]="editForm.cost" placeholder="Enter cost per unit" step="0.01" min="0">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Unit of Measurement</mat-label>
+          <input matInput [(ngModel)]="editForm.unit" placeholder="e.g., grams, ml, unit">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Stock Amount</mat-label>
+          <input matInput type="number" [(ngModel)]="editForm.stockAmount" placeholder="Enter current stock" min="0">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Low Stock Threshold</mat-label>
+          <input matInput type="number" [(ngModel)]="editForm.reorderThreshold" placeholder="Enter low stock threshold" min="0">
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-raised-button color="primary" (click)="saveItem()" [disabled]="!isFormValid()">
+            <mat-icon>save</mat-icon>
+            Save
+          </button>
+          <button mat-raised-button (click)="cancelEdit()">
+            <mat-icon>cancel</mat-icon>
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <table mat-table [dataSource]="dataSource" class="inventory-items-table">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let item">
+        @if (isEditing(item.id)) {
+          <mat-form-field appearance="outline" class="inline-field">
+            <input matInput [(ngModel)]="editForm.name">
+          </mat-form-field>
+        } @else {
+          {{ item.name }}
+        }
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cost">
+      <th mat-header-cell *matHeaderCellDef>Cost ($)</th>
+      <td mat-cell *matCellDef="let item">
+        @if (isEditing(item.id)) {
+          <mat-form-field appearance="outline" class="inline-field">
+            <input matInput type="number" [(ngModel)]="editForm.cost" step="0.01" min="0">
+          </mat-form-field>
+        } @else {
+          {{ item.cost | currency }}
+        }
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="unit">
+      <th mat-header-cell *matHeaderCellDef>Unit</th>
+      <td mat-cell *matCellDef="let item">
+        @if (isEditing(item.id)) {
+          <mat-form-field appearance="outline" class="inline-field">
+            <input matInput [(ngModel)]="editForm.unit">
+          </mat-form-field>
+        } @else {
+          {{ item.unit }}
+        }
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="stockAmount">
+      <th mat-header-cell *matHeaderCellDef>Stock Amount</th>
+      <td mat-cell *matCellDef="let item">
+        @if (isEditing(item.id)) {
+          <mat-form-field appearance="outline" class="inline-field">
+            <input matInput type="number" [(ngModel)]="editForm.stockAmount" min="0">
+          </mat-form-field>
+        } @else {
+          <span [class.low-stock]="item.stockAmount !== undefined && item.reorderThreshold !== undefined && item.stockAmount <= item.reorderThreshold">
+            {{ item.stockAmount }}
+          </span>
+        }
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="reorderThreshold">
+      <th mat-header-cell *matHeaderCellDef>Low Stock Threshold</th>
+      <td mat-cell *matCellDef="let item">
+        @if (isEditing(item.id)) {
+          <mat-form-field appearance="outline" class="inline-field">
+            <input matInput type="number" [(ngModel)]="editForm.reorderThreshold" min="0">
+          </mat-form-field>
+        } @else {
+          {{ item.reorderThreshold }}
+        }
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let item">
+        @if (isEditing(item.id)) {
+          <button mat-icon-button color="primary" (click)="saveItem()" [disabled]="!isFormValid()">
+            <mat-icon>save</mat-icon>
+          </button>
+          <button mat-icon-button (click)="cancelEdit()">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        } @else {
+          <button mat-icon-button color="primary" (click)="editItem(item)" [disabled]="editingItemId !== null || isAddingNew">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteItem(item.id)" [disabled]="editingItemId !== null || isAddingNew">
+            <mat-icon>delete</mat-icon>
+          </button>
+        }
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let _; columns: displayedColumns"></tr>
+  </table>
+</div>
